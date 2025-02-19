@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll to Change Image</title>
+    <style>
+        body {
+            margin: 0;
+            height: 10000vh; /* Make the page scrollable */
+            background-image: url('Visuals/arianaBackground.png');
+            background-attachment: fixed;
+        }
+        img {
+            width: 300px;
+            /* transition: all 0.5s ease-in-out;  */
+            position: fixed; /* Fix the image in place */
+            top: 50%; /* Position it vertically at the center */
+            left: 10%; /* Position it horizontally at the center */
+            transform: translate(-50%, -50%); /* Offset the image to exactly center it */
+        }
+    </style>
+</head>
+<body>
+
+    <img id="image" src="Visuals/ariana1.png" alt="Image">
+    <audio autoplay>
+        <source src="Audio/Music.mp3" type="audio/mp3">
+    </audio>
+    <script>
+        
+        
+        const imageConfigs = [
+            { width: "340px", top: "50%" },
+            { width: "340px", top: "50%" },
+            { width: "300px", top: "50%" },
+            { width: "340px", top: "50%" },
+            { width: "300px", top: "50%" },
+            { width: "340px", top: "50%" },
+            { width: "300px", top: "50%" },
+            { width: "340px", top: "50%" },
+            { width: "300px", top: "50%" },
+            { width: "240px", top: "43%" },
+            { width: "250px", top: "43%" },
+            { width: "250px", top: "43%" },
+            { width: "250px", top: "38%" },
+            { width: "250px", top: "35.2%" },
+            { width: "250px", top: "50%" },
+            { width: "250px", top: "50%" },
+            { width: "210px", top: "50%" },
+            { width: "170px", top: "50%" },
+            { width: "120px", top: "50%" },
+            { width: "80px", top: "50%" },
+            { width: "50px", top: "50%" },
+            { width: "20px", top: "50%" },
+            { width: "0px", top: "50%" },
+            { width: "100px", top: "50%" },
+            { width: "200px", top: "50%" },
+            { width: "300px", top: "50%" },
+            { width: "400px", top: "50%" },
+            { width: "600px", top: "50%" },
+            { width: "900px", top: "50%" },
+            { width: "1000px", top: "50%" },
+            { width: "1000px", top: "50%" },
+            { width: "1000px", top: "50%" },
+        ];
+
+        const images = [];
+        for (let i = 1; i <= 31; i++) {
+        images[i] = new Image();
+        images[i].src = `Visuals/ariana${i}.png`;
+        }
+
+        const img = document.getElementById("image");
+        let imgIndex = 1;
+        let lastScrollY = 0;
+        let scrollThreshold = 100;
+        let accumulatedScroll = 0;
+        let ticking = false;
+
+        function updateImage() {
+            const config = imageConfigs[imgIndex - 1];
+            img.style.width = config.width;
+            img.style.top = config.top;
+            img.src = `Visuals/ariana${imgIndex}.png`;
+            
+            let newPosition =+ Math.min(10 + 4 * imgIndex, 47 +  (Math.floor(imgIndex/17) + Math.floor(imgIndex / 18) + Math.floor(imgIndex / 19) +  Math.floor(imgIndex/20)+  Math.floor(imgIndex/21)+Math.floor(imgIndex/22))/2);
+            img.style.left = `${newPosition}%`;
+
+            ticking = false;
+        }
+
+        window.addEventListener("scroll", () => {
+            let deltaY = window.scrollY - lastScrollY;
+            accumulatedScroll += deltaY;
+            if (Math.abs(accumulatedScroll) >= scrollThreshold) {
+                const scrollDirection = window.scrollY > lastScrollY ? 1 : -1;
+                imgIndex = Math.max(1, Math.min(31, imgIndex + scrollDirection));
+                lastScrollY = window.scrollY;
+                accumulatedScroll = 0;
+
+            if (!ticking) {
+                requestAnimationFrame(updateImage);
+                ticking = true;
+            }
+        }
+            });
+
+    </script>
+
+</body>
+</html>
