@@ -29,10 +29,6 @@
     </audio>
     <script>
 
-        document.getElementById("playAudio").addEventListener("click", function() {
-        const audio = document.getElementById("audioPlayer");
-        audio.play();
-        });
         
         
         const imageConfigs = [
@@ -82,10 +78,13 @@
         let scrollThreshold = 100;
         let accumulatedScroll = 0;
         let ticking = false;
+        const maxWidth = window.innerWidth * 0.95;
 
         function updateImage() {
             const config = imageConfigs[imgIndex - 1];
-            img.style.width = config.width;
+            if (config.width < maxWidth)
+            {img.style.width = config.width;}
+            else {img.style.width = maxWidth;}
             img.style.top = config.top;
             img.src = `Visuals/ariana${imgIndex}.png`;
             
@@ -110,6 +109,8 @@
             }
         }
             });
+
+
 
     </script>
 
