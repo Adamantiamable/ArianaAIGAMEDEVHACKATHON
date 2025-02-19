@@ -25,9 +25,14 @@
 
     <img id="image" src="Visuals/ariana1.png" alt="Image">
     <audio autoplay>
-        <source src="https://hackathon-website-f235zjphe-isalines-projects.vercel.app/Audio/Music.mp3" type="audio/mp3">
+        <source src="Audio/Music.mp3" type="audio/mp3">
     </audio>
     <script>
+
+        document.getElementById("playAudio").addEventListener("click", function() {
+        const audio = document.getElementById("audioPlayer");
+        audio.play();
+        });
         
         
         const imageConfigs = [
