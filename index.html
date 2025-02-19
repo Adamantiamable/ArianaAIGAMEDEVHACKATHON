@@ -82,7 +82,8 @@
 
         function updateImage() {
             const config = imageConfigs[imgIndex - 1];
-            if (config.width < maxWidth)
+            console.log(window.innerWidth);
+            if (window.innerWidth > 769)
             {img.style.width = config.width;}
             else {img.style.width = maxWidth;}
             img.style.top = config.top;
