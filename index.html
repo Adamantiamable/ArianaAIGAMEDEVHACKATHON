@@ -10,6 +10,7 @@
             height: 10000vh; /* Make the page scrollable */
             background-image: url('Visuals/arianaBackground.png');
             background-attachment: fixed;
+
         }
         img {
             width: 300px;
@@ -23,17 +24,29 @@
 </head>
 <body>
 
-    <img id="image" src="Visuals/ariana1.png" alt="Image">
-    <button onclick="document.getElementById('audio').play()">Play Music</button>
+    <button onclick="document.getElementById('audio').play()">
+        <img src="Visuals/soundOn.png" alt="Play" style="top: 50px; left: 50px; width:40px; filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.5));">
+    </button>
     <audio id="audio">
         <source src="Audio/Music.mp3" type="audio/mp3">
     </audio>
+
+    <img id="image" src="Visuals/ariana1.png" alt="Image">
+    <img id="blinking-image" src="Visuals/ScrollDown.png" alt="Blinking Image">
+
+
+
     <script>
+
+        let beginning = true;
 
         window.onload = () => {
             // Scroll to the middle of the page
             window.scrollTo(0, document.body.scrollHeight / 2 - window.innerHeight / 2);
+
         };
+
+       
 
         
         
@@ -79,12 +92,35 @@
         }
 
         const img = document.getElementById("image");
-        let imgIndex = 1;
+        let imgIndex = 0;
         let lastScrollY = 0;
         let scrollThreshold = 100;
         let accumulatedScroll = 0;
         let ticking = false;
         const maxWidth = window.innerWidth * 0.95;
+
+        
+        const scrollDownImage = document.getElementById("blinking-image");
+        scrollDownImage.style.left = "50%";
+
+        // Make the image blink every 500ms
+        const blinkInterval = setInterval(() => {
+        scrollDownImage.style.visibility = (scrollDownImage.style.visibility === "hidden") ? "visible" : "hidden";
+        }, 600);
+        let scrollCount = 0;
+
+        const removeOnSecondScroll = () => {
+            scrollCount++;
+            console.log(scrollCount);
+            if (scrollCount === 3) {
+                clearInterval(blinkInterval); // Stop blinking
+                scrollDownImage.remove(); // Remove the image
+                window.removeEventListener("scroll", removeOnSecondScroll); // Remove event listener
+            }
+        };
+
+        // Remove the image when scrolling starts
+        window.addEventListener("scroll", removeOnSecondScroll);
 
         function updateImage() {
             const config = imageConfigs[imgIndex - 1];
@@ -97,6 +133,7 @@
             let newPosition =+ Math.min(10 + 4 * imgIndex, 47 +  (Math.floor(imgIndex/17) + Math.floor(imgIndex / 18) + Math.floor(imgIndex / 19) +  Math.floor(imgIndex/20)+  Math.floor(imgIndex/21)+Math.floor(imgIndex/22))/2);
             img.style.left = `${newPosition}%`;
 
+            
             if (imgIndex === 31) {
                 img.addEventListener('click', function() {
                 window.open('https://lu.ma/4tegf5zb', '_blank');
@@ -114,6 +151,7 @@
                 imgIndex = Math.max(1, Math.min(31, imgIndex + scrollDirection));
                 lastScrollY = window.scrollY;
                 accumulatedScroll = 0;
+                begginning = false;
 
             if (!ticking) {
                 requestAnimationFrame(updateImage);
