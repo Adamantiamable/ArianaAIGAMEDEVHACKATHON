@@ -29,6 +29,11 @@
     </audio>
     <script>
 
+        window.onload = () => {
+            // Scroll to the middle of the page
+            window.scrollTo(0, document.body.scrollHeight / 2 - window.innerHeight / 2);
+        };
+
         
         
         const imageConfigs = [
@@ -82,7 +87,6 @@
 
         function updateImage() {
             const config = imageConfigs[imgIndex - 1];
-            console.log(window.innerWidth);
             if (window.innerWidth > 769)
             {img.style.width = config.width;}
             else {img.style.width = maxWidth;}
@@ -93,7 +97,9 @@
             img.style.left = `${newPosition}%`;
 
             if (imgIndex === 31) {
-                window.location.href = "https://lu.ma/4tegf5zb";
+                img.addEventListener('click', function() {
+                window.open('https://lu.ma/4tegf5zb', '_blank');
+                });              
             }
 
             ticking = false;
@@ -114,6 +120,8 @@
             }
         }
             });
+
+
 
 
 
