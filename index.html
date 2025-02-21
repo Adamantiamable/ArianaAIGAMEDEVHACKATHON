@@ -24,10 +24,10 @@
 </head>
 <body>
 
-    <button onclick="document.getElementById('audio').play()">
+    <button onclick="toggleAudio()">
         <img src="Visuals/soundOn.png" alt="Play" style="top: 50px; left: 50px; width:40px; filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.5));">
     </button>
-    <audio id="audio">
+    <audio id="audio" loop>
         <source src="Audio/Music.mp3" type="audio/mp3">
     </audio>
 
@@ -45,6 +45,15 @@
             window.scrollTo(0, document.body.scrollHeight / 2 - window.innerHeight / 2);
 
         };
+
+        function toggleAudio() {
+        const audio = document.getElementById("audio");
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    }
 
        
 
